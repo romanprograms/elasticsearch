@@ -236,3 +236,89 @@ curl -H "Content-Type: application/json" -XGET '127.0.0.1:9200/movies/_search?pr
 }
 '
 ```
+
+# Pagination
+```sh
+curl -H "Content-Type: application/json" -XGET '127.0.0.1:9200/movies/_search?pretty' -d '
+{
+  "from": 2,
+  "size": 2,
+  "query": {
+    "match": {
+      "genre": "Sci-Fi"
+    }
+  }
+}
+'
+```
+Deep pagination can kill performance.
+Every result must be retrieved, collected, and sorted.
+Enforce an upper bound on how many results you'll return to users.
+
+
+# Sorting
+
+```sh
+curl -H "Content-Type: application/json" -XGET '127.0.0.1:9200/movies/_search?pretty' -d '
+{
+  "sort": "year"
+}
+'
+`
+```
+
+A string field that is analyzed for full text search can't be used to sort documents
+
+That is because it exists in the inverted index as individual terms, not as the entire string.
+
+```sh
+curl -XPUT "127.0.0.1:9200/movies/" -d '
+{
+  "mappings": {
+    "properties": {
+      "title": {
+         "type": "text",
+         "fields": {
+            "raw": {
+              {
+                "type": "keyword"
+              }
+            }
+          }
+       }
+    }
+  }
+}
+'
+
+```
+
+Sadly, you cannot change the mapping on an existing index.
+You'd have to delete it, set up a new mapping, and re-index it.
+Like number of shards, this is something you should think about before importing data into your index.
+```sh
+curl  -XDELETE 127.0.0.1:9200/movies
+curl -H "Content-Type:application/json" -XPUT "127.0.0.1:9200/movies" -d '
+{
+  "mappings": {
+    "properties": {
+      "title": {
+         "type": "text",
+         "fields": {
+            "raw": {
+                "type": "keyword"
+              }
+          }
+      }
+    }
+  }
+}
+'
+
+curl -H "Content-Type: application/x-ndjson" -XPUT "127.0.0.1:9200/_bulk?pretty" --data-binary @movies.json
+curl -H "Content-Type: application/json" -XGET '127.0.0.1:9200/movies/_search?pretty' -d '
+{
+  "sort": "title.raw"
+}
+'
+```
