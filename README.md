@@ -61,3 +61,41 @@ examples
 ```sh
 posting --collection posting --env posting/envs/local.env
 ```
+
+```sh
+
+  Suggested scheme for ES
+
+  cluster/
+    health
+    stats
+    settings
+  indices/
+    list
+    create
+    delete
+    mapping-get
+  docs/
+    index
+    get
+    update
+    delete
+  search/
+    match-all
+    by-field
+    aggregations
+
+  For the request you likely just made (GET /_cluster/health)
+
+  cluster/health
+
+  Rule of thumb
+
+  - Folder = resource group (cluster, indices, docs, search).
+  - Filename = action (health, create, delete, by-email).
+  - Lowercase + hyphens — easier in a shell, plays nice with git.
+  - Skip the HTTP verb in the name — Posting shows it in the sidebar already.
+
+  If it's truly a one-off, just cluster/health is fine. You can rename/move later by
+  editing the file on disk.
+```
