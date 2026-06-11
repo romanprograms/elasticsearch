@@ -1,0 +1,2 @@
+name: Get doc by id
+url: $ES_URL/movies/_doc/109487

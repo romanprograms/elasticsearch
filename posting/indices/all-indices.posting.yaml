@@ -1,0 +1,2 @@
+name: All indices
+url: $ES_URL/_all

@@ -1,0 +1,3 @@
+name: Delete doc by ID
+method: DELETE
+url: $ES_URL/movies/_doc/58559

@@ -1,0 +1,2 @@
+name: indicies
+url: $ES_URL/_cat/indices

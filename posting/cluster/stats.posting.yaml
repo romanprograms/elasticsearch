@@ -1,0 +1,2 @@
+name: stats
+url: $ES_URL/_stats?pretty

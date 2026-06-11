@@ -1,0 +1,19 @@
+name: Update One Doc With Seq num
+method: PUT
+url: $ES_URL/movies/_doc/109487
+body:
+  content: |-
+    {
+      "genre": ["IMAX", "Sci-Fi"],
+      "title": "Interstellar foo",
+      "year": 2014
+    }
+  content_type: application/json
+headers:
+- name: content-type
+  value: application/json
+params:
+- name: if_seq_no
+  value: '7'
+- name: if_primary_term
+  value: '1'

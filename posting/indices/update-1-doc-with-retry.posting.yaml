@@ -1,0 +1,17 @@
+name: Update 1 doc with retry
+method: POST
+url: $ES_URL/movies/_update/109487
+body:
+  content: |-
+    {
+      "doc": {
+        "title": "Interstellar typok"
+      }
+    }
+  content_type: application/json
+headers:
+- name: content-type
+  value: application/json
+params:
+- name: retry_on_conflict
+  value: '3'

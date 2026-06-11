@@ -1,0 +1,3 @@
+name: Delete Index
+method: DELETE
+url: $ES_URL/movies

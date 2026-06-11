@@ -1,0 +1,5 @@
+name: search with query param
+url: $ES_URL/movies/_search
+params:
+- name: q
+  value: Dark
